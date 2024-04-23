@@ -1,8 +1,6 @@
 <template>
   <div>
-    <span class="uppercase font-bold tracking-wide">{{
-      "menu.theme.label"
-    }}</span>
+    <span class="uppercase font-bold tracking-wide">Theme</span>
     <Listbox as="div" v-model="colorMode.preference">
       <div class="relative mt-2">
         <ListboxButton

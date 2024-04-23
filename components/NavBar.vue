@@ -7,6 +7,9 @@
         </div>
         <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start"></div>
         <div class="absolute inset-y-0 left-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+          <div>
+            <requests />
+          </div>
           <!-- Profile dropdown -->
           <Menu as="div" class="relative ml-3">
             <div>
@@ -26,6 +29,7 @@
               </MenuItems>
             </transition>
           </Menu>
+
         </div>
       </div>
     </div>
@@ -53,9 +57,10 @@ import {
 
 import { UserCircleIcon } from "@heroicons/vue/24/solid";
 import Cart from "./Cart.vue";
-import { defineProps } from 'vue';
+import requests from "./requests.vue";
+import { defineProps } from "vue";
 const props = defineProps({
-  cartItems: Array
+  cartItems: Array,
 });
 </script>
 

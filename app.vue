@@ -29,34 +29,41 @@ const items = reactive({
       name: "Coxinha",
       description: "Delicious chicken coxinha.",
       price: "2.50",
-    },
+      bulkPrice: "2.00",
+      bulkprice: "2.50",
+      bulkPrice: "2.00",    },
     {
       id: 2,
       imageUrl: "https://picsum.photos/10/6?image=5",
       name: "Pastel",
       description: "Crispy cheese pastel.",
-      price: "3.00",
+      price: "2.50",
+      bulkPrice: "2.00",
+      bulkPrice: "2.00"
     },
     {
       id: 3,
       imageUrl: "https://picsum.photos/10/6?image=5",
       name: "Kibe",
       description: "Spicy beef kibe.",
-      price: "2.75",
+      price: "2.50",
+      bulkPrice: "2.00",
     },
     {
       id: 4,
       imageUrl: "https://picsum.photos/10/6?image=5",
       name: "Empada",
       description: "Shrimp empada.",
-      price: "3.25",
+      price: "2.50",
+      bulkPrice: "2.00",
     },
     {
       id: 5,
       imageUrl: "https://picsum.photos/10/6?image=5",
       name: "Esfiha",
       description: "Delicious esfiha with beef.",
-      price: "3.00",
+      price: "2.50",
+      bulkPrice: "2.00",
     },
   ],
   doces: [
@@ -65,35 +72,40 @@ const items = reactive({
       imageUrl: "https://picsum.photos/10/6?image=5",
       name: "Brigadeiro",
       description: "Chocolate brigadeiro.",
-      price: "1.50",
+      price: "2.50",
+      bulkPrice: "2.00",
     },
     {
       id: 7,
       imageUrl: "https://picsum.photos/10/6?image=5",
       name: "Beijinho",
       description: "Sweet coconut beijinho.",
-      price: "1.50",
+      price: "2.50",
+      bulkPrice: "2.00",
     },
     {
       id: 8,
       imageUrl: "https://picsum.photos/10/6?image=5",
       name: "Quindim",
       description: "Egg yolk and coconut quindim.",
-      price: "2.00",
+      price: "2.50",
+      bulkPrice: "2.00",
     },
     {
       id: 9,
       imageUrl: "https://picsum.photos/10/6?image=5",
       name: "Pudim",
       description: "Caramelized milk pudding.",
-      price: "3.50",
+      price: "2.50",
+      bulkPrice: "2.00",
     },
     {
       id: 10,
       imageUrl: "https://picsum.photos/10/6?image=5",
       name: "Bolo de Rolo",
       description: "Guava roll cake.",
-      price: "4.00",
+      price: "2.50",
+      bulkPrice: "2.00",
     },
   ],
   bebidas: [
@@ -102,7 +114,8 @@ const items = reactive({
       imageUrl: "https://picsum.photos/10/6?image=5",
       name: "Coffee",
       description: "Freshly brewed coffee.",
-      price: "1.50",
+      price: "2.50",
+      bulkPrice: "2.00",
       category: "bebidas",
     },
     {
@@ -110,7 +123,8 @@ const items = reactive({
       imageUrl: "https://picsum.photos/10/6?image=5",
       name: "Coffee",
       description: "Freshly brewed coffee.",
-      price: "1.50",
+      price: "2.50",
+      bulkPrice: "2.00",
       category: "bebidas",
     },
     {
@@ -118,7 +132,8 @@ const items = reactive({
       imageUrl: "https://picsum.photos/10/6?image=5",
       name: "Coffee",
       description: "Freshly brewed coffee.",
-      price: "1.50",
+      price: "2.50",
+      bulkPrice: "2.00",
       category: "bebidas",
     },
     {
@@ -126,7 +141,8 @@ const items = reactive({
       imageUrl: "https://picsum.photos/10/6?image=5",
       name: "Coffee",
       description: "Freshly brewed coffee.",
-      price: "1.50",
+      price: "2.50",
+      bulkPrice: "2.00",
       category: "bebidas",
     },
     {
@@ -134,7 +150,8 @@ const items = reactive({
       imageUrl: "https://picsum.photos/10/6?image=5",
       name: "Coffee",
       description: "Freshly brewed coffee.",
-      price: "1.50",
+      price: "2.50",
+      bulkPrice: "2.00",
       category: "bebidas",
     },
   ],
@@ -152,7 +169,7 @@ const addToCart = ({ item, quantity }) => {
   } else {
     cartItems.push({ ...item, quantity });
   }
-  snackbarRef.value.showSnackbar(`Added ${quantity} ${item.name} to cart!`);
+  snackbarRef.value.showSnackbar(`Item adicionado ao carrinho! ${quantity} ${item.name}`);
   saveCartItems();
 };
 
