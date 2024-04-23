@@ -6,7 +6,7 @@
           <Cart :cartItems="cartItems" />
         </div>
         <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start"></div>
-        <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+        <div class="absolute inset-y-0 left-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
           <!-- Profile dropdown -->
           <Menu as="div" class="relative ml-3">
             <div>
@@ -19,7 +19,7 @@
               leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100"
               leave-to-class="transform opacity-0 scale-95">
               <MenuItems
-                class="absolute right-0 z-10 mt-2 w-60 p-4 origin-top-right rounded-md bg-base-100 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                class="absolute left-0 z-10 mt-2 w-60 p-4 origin-top-right rounded-md bg-base-100 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                 <div class="grid grid-cols-1">
                   <MenuThemeSelector />
                 </div>

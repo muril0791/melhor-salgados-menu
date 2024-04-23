@@ -3,6 +3,9 @@
   <section style="display: flex; justify-content: center">
     <CategoryMenu @update:category="updateCategory" />
   </section>
+  <div>
+    <Snackbar ref="snackbarRef" />
+  </div>
   <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
       <Card v-for="item in items[category]" :key="item.id" :item="item" @add-to-cart="addToCart" />
@@ -10,12 +13,14 @@
   </div>
 </template>
 
-
 <script setup>
 import { reactive, ref } from "vue";
 import NavBar from "@/components/NavBar.vue";
 import CategoryMenu from "@/components/Menu/CategoryMenu.vue";
 import Card from "@/components/Card.vue";
+import Snackbar from "@/components/Snackbar.vue";
+
+const snackbarRef = ref(null);
 const items = reactive({
   salgados: [
     {
@@ -134,14 +139,12 @@ const items = reactive({
     },
   ],
 });
+const cartItems = reactive([]);
+const category = ref("salgados");
 
-// Reactive cartItems array
-const cartItems = reactive([
-  // Exemplo de itens
-]);
-
-
-// Em App.vue
+function showSnackbar() {
+  snackbarRef.value.showSnackbar('Mensagem de exemplo');
+}
 const addToCart = ({ item, quantity }) => {
   const existingItem = cartItems.find(cartItem => cartItem.id === item.id);
   if (existingItem) {
@@ -149,11 +152,8 @@ const addToCart = ({ item, quantity }) => {
   } else {
     cartItems.push({ ...item, quantity }); // Inclui a quantidade inicial correta
   }
+  snackbarRef.value.showSnackbar(`Added ${quantity} ${item.name} to cart!`);
 };
-
-
-// Reactive category
-const category = ref("salgados");
 
 const updateCategory = (newCategory) => {
   category.value = newCategory;
