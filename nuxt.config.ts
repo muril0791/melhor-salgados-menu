@@ -26,7 +26,7 @@ export default defineNuxtConfig({
     viewer: true,
   },
   colorMode: {
-    preference: "Coffee", 
+    preference: "coffee", 
     dataValue: "theme",
     classSuffix: "",
   },
