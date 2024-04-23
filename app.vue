@@ -14,7 +14,7 @@
 </template>
 
 <script setup>
-import { reactive, ref } from "vue";
+import { reactive, ref, watchEffect, onMounted } from "vue";
 import NavBar from "@/components/NavBar.vue";
 import CategoryMenu from "@/components/Menu/CategoryMenu.vue";
 import Card from "@/components/Card.vue";
@@ -148,16 +148,41 @@ function showSnackbar() {
 const addToCart = ({ item, quantity }) => {
   const existingItem = cartItems.find(cartItem => cartItem.id === item.id);
   if (existingItem) {
-    existingItem.quantity += quantity; // Adiciona a quantidade correta
+    existingItem.quantity += quantity;
   } else {
-    cartItems.push({ ...item, quantity }); // Inclui a quantidade inicial correta
+    cartItems.push({ ...item, quantity });
   }
   snackbarRef.value.showSnackbar(`Added ${quantity} ${item.name} to cart!`);
+  saveCartItems();
 };
 
 const updateCategory = (newCategory) => {
   category.value = newCategory;
 };
+
+onMounted(() => {
+  if (process.client) {
+    loadCartItems();
+  }
+});
+
+watchEffect(() => {
+  if (process.client && cartItems.length > 0) {
+    saveCartItems();
+  }
+});
+
+function loadCartItems() {
+  const savedItems = localStorage.getItem('cartItems');
+  if (savedItems) {
+    const items = JSON.parse(savedItems);
+    cartItems.splice(0, cartItems.length, ...items);
+  }
+}
+
+function saveCartItems() {
+  localStorage.setItem('cartItems', JSON.stringify(cartItems));
+}
 </script>
 
 <style>
