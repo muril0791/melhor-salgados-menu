@@ -1,9 +1,9 @@
 <template>
   <div>
     <!-- Botão para abrir/fechar o carrinho -->
-    <button @click="toggleCart" class="bg-blue-500 text-white p-2 rounded hover:bg-blue-600 fixed top-4 right-4 z-50">
-      <span>Cart</span>
-      <span class="bg-red-600 px-2 py-1 rounded-full text-xs ml-2">{{ cartItems.length }}</span>
+    <button @click="toggleCart" class="text-white p-2 rounded hover:bg-gray-600 rounded fixed top-4 right-4 z-50">
+      <v-icon>mdi-cart</v-icon>
+        <span class="bg-red-600 px-2 py-1 rounded-full text-xs ml-2">{{ cartItems.length }}</span>
     </button>
 
     <!-- Carrinho Drawer -->

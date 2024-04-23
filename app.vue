@@ -3,11 +3,11 @@
   <section style="display: flex; justify-content: center">
     <CategoryMenu @update:category="updateCategory" />
   </section>
-  <v-container>
-    <v-row>
+  <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
       <Card v-for="item in items[category]" :key="item.id" :item="item" @add-to-cart="addToCart" />
-    </v-row>
-  </v-container>
+    </div>
+  </div>
 </template>
 
 
@@ -16,7 +16,6 @@ import { reactive, ref } from "vue";
 import NavBar from "@/components/NavBar.vue";
 import CategoryMenu from "@/components/Menu/CategoryMenu.vue";
 import Card from "@/components/Card.vue";
-
 const items = reactive({
   salgados: [
     {
@@ -102,7 +101,7 @@ const items = reactive({
       category: "bebidas",
     },
     {
-      id: 11,
+      id: 12,
       imageUrl: "https://picsum.photos/10/6?image=5",
       name: "Coffee",
       description: "Freshly brewed coffee.",
@@ -110,7 +109,7 @@ const items = reactive({
       category: "bebidas",
     },
     {
-      id: 11,
+      id: 13,
       imageUrl: "https://picsum.photos/10/6?image=5",
       name: "Coffee",
       description: "Freshly brewed coffee.",
@@ -118,7 +117,7 @@ const items = reactive({
       category: "bebidas",
     },
     {
-      id: 11,
+      id: 14,
       imageUrl: "https://picsum.photos/10/6?image=5",
       name: "Coffee",
       description: "Freshly brewed coffee.",
@@ -126,7 +125,7 @@ const items = reactive({
       category: "bebidas",
     },
     {
-      id: 11,
+      id: 15,
       imageUrl: "https://picsum.photos/10/6?image=5",
       name: "Coffee",
       description: "Freshly brewed coffee.",
@@ -139,19 +138,19 @@ const items = reactive({
 // Reactive cartItems array
 const cartItems = reactive([
   // Exemplo de itens
-  { id: 1, name: 'Produto 1', price: 10.00, quantity: 2 },
-  { id: 2, name: 'Produto 2', price: 15.00, quantity: 1 }
 ]);
 
 
-const addToCart = (item) => {
+// Em App.vue
+const addToCart = ({ item, quantity }) => {
   const existingItem = cartItems.find(cartItem => cartItem.id === item.id);
   if (existingItem) {
-    existingItem.quantity++;
+    existingItem.quantity += quantity; // Adiciona a quantidade correta
   } else {
-    cartItems.push({ ...item, quantity: 1 });
+    cartItems.push({ ...item, quantity }); // Inclui a quantidade inicial correta
   }
 };
+
 
 // Reactive category
 const category = ref("salgados");
