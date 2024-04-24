@@ -1,40 +1,46 @@
 <template>
-  <div class="col-span-12 sm:col-span-6 md:col-span-1">
-    <div class="mx-auto my-12 max-w-sm shadow-lg rounded-lg overflow-hidden">
-      <div class="relative h-64">
-        <v-img cover class="rounded-t-lg" :src="item.imageUrl" />
-        <div class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 p-4">
-          <h3 class="text-white text-lg">{{ item.name }}</h3>
-        </div>
+  <div class="col">
+    <div class="bg-white rounded-lg shadow overflow-hidden group">
+      <!-- Imagem e ícone de favorito -->
+      <div class="relative">
+        <img class="h-48 w-full object-cover" :src="item.imageUrl" />
+        <button class="absolute top-0 right-0 p-2 text-gray-400 hover:text-red-600">
+          <v-icon>mdi-heart</v-icon>
+        </button>
       </div>
-      <div class="p-4 bg-white">
-        <p class="text-gray-700 mb-2">{{ item.description }}</p>
-        <p class="text-primary mb-4">R$ {{ computedPrice }} <span v-if="item.category === 'salgado || doces'">Und</span></p>
-
-        <!-- Quantidade para salgados e doces -->
-        <div v-if="item.category !== 'bebidas'" class="flex gap-2 mb-4 justify-center">
+      <div class="px-4 py-2">
+        <h3 class="mt-2 text-lg font-semibold">{{ item.name }}</h3>
+        <p class="mt-1 text-sm text-gray-600">{{ item.description }}</p>
+        <div class="mt-3 flex justify-between items-center">
+          <span class="text-xl font-semibold">R$ {{ computedPrice }}</span>
+          <div v-if="item.category === 'bebidas'">
+            <button @click="decreaseQuantity" class="text-gray-500">-</button>
+            <span class="mx-2">{{ selectedQuantity }}</span>
+            <button @click="increaseQuantity" class="text-gray-500">+</button>
+          </div>
+        </div>
+        <div v-if="item.category === 'bebidas'" class="mt-3">
+          <select v-model="selectedVolume"
+            class="w-full p-2 bg-white border border-gray-300 rounded focus:ring-blue-500 focus:border-blue-500">
+            <option disabled value="">Select volume</option>
+            <option v-for="(price, volume) in beverageOptions" :key="volume" :value="volume">
+              {{ volume }}
+            </option>
+          </select>
+        </div>
+        <div v-else class="mt-3 flex gap-2">
           <button v-for="quantity in quantities" :key="quantity" @click="updateSelectedQuantity(quantity)"
-            :class="buttonClasses(quantity === selectedQuantity)">
-            {{ quantity }}
+            :class="['text-xs px-3 py-1 rounded-full', selectedQuantity === quantity ? 'bg-green-500 text-white' : 'bg-gray-200 text-gray-800 hover:bg-gray-300']">
+            {{ quantity }} Unid
           </button>
         </div>
-
-        <!-- Volume para bebidas -->
-        <div v-if="item.category === 'bebidas'" class="flex gap-2 mb-4 justify-center">
-          <button v-for="(value, volume) in beverageOptions" :key="volume" @click="updateSelectedVolume(volume)"
-            :class="buttonClasses(volume === selectedVolume)">
-            {{ volume }}
-          </button>
-        </div>
-
-        <!-- Botão de adicionar ao carrinho -->
         <button :disabled="!canAddToCart" @click="emitAddToCart"
-          class="bg-green-600 text-white w-full py-2 mt-2 rounded hover:bg-green-700 disabled:bg-green-300">
+          class="mt-4 w-full bg-green-500 text-white py-2 rounded hover:bg-green-600">
           Adicionar ao Carrinho
         </button>
       </div>
     </div>
-  </div>
+    </div>  
 </template>
 
 <script setup>
@@ -57,49 +63,51 @@ const beverageOptions = {
 };
 
 const selectedQuantity = ref(props.item.category === 'bebidas' ? 1 : 15);
-const selectedVolume = ref('');
+const selectedVolume = ref('2L'); // Pre-select '2L' for beverages
 
 const computedPrice = computed(() => {
   if (props.item.category === 'bebidas' && selectedVolume.value) {
-    return beverageOptions[selectedVolume.value];
+    return (selectedQuantity.value * beverageOptions[selectedVolume.value]).toFixed(2);
   }
-  return selectedQuantity.value >= 100 ? props.item.bulkPrice : props.item.price;
+  return (selectedQuantity.value * (selectedQuantity.value >= 100 ? props.item.bulkPrice : props.item.price)).toFixed(2);
 });
 
 const canAddToCart = computed(() => {
   return props.item.category === 'bebidas'
-    ? Boolean(selectedVolume.value)
+    ? Boolean(selectedVolume.value) && selectedQuantity.value > 0
     : selectedQuantity.value >= 15;
 });
 
 function updateSelectedQuantity(quantity) {
   selectedQuantity.value = quantity;
-  selectedVolume.value = '';
 }
 
-function updateSelectedVolume(volume) {
-  selectedVolume.value = volume;
-  selectedQuantity.value = 1; // Set to 1 since it's a beverage
+function increaseQuantity() {
+  if (selectedQuantity.value < 100) {
+    selectedQuantity.value++;
+  }
 }
 
-function buttonClasses(condition) {
-  return {
-    'bg-purple-200 text-white rounded-full px-3 py-1 hover:bg-purple-400 active:bg-purple-600 focus:bg-purple-800': true,
-    'bg-deep-purple-200': condition,
-  };
+function decreaseQuantity() {
+  if (selectedQuantity.value > 1) {
+    selectedQuantity.value--;
+  }
 }
 
 function emitAddToCart() {
-  if (!canAddToCart.value) return;
-
-  emits('add-to-cart', {
-    item: props.item,
-    quantity: props.item.category === 'bebidas' ? 1 : selectedQuantity.value,
-    pricePerUnit: computedPrice.value,
-  });
+  if (canAddToCart.value) {
+    emits('add-to-cart', {
+      item: props.item,
+      quantity: selectedQuantity.value,
+      volume: selectedVolume.value,
+      pricePerUnit: computedPrice.value,
+      detail: `${props.item.name} ${selectedVolume.value}`
+    });
+    selectedQuantity.value = props.item.category === 'bebidas' ? 1 : 15; // Reset for next interaction
+  }
 }
 </script>
 
-<style>
-/* Sinta-se à vontade para adicionar mais estilos se necessário */
+<style scoped>
+/* Additional styles if needed */
 </style>

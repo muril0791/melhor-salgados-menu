@@ -6,7 +6,7 @@
   <div>
     <Snackbar ref="snackbarRef" />
   </div>
-  <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+  <div class="max-w-screen-xl mx-auto my-4 px-4 sm:px-6 lg:px-8">
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
       <Card v-for="item in items[category]" :key="item.id" :item="item" @add-to-cart="addToCart" />
     </div>
