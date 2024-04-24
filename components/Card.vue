@@ -12,7 +12,9 @@
         <h3 class="mt-2 text-lg font-semibold">{{ item.name }}</h3>
         <p class="mt-1 text-sm text-gray-600">{{ item.description }}</p>
         <div class="mt-3 flex justify-between items-center">
-          <span class="text-xl font-semibold">R$ {{ computedPrice }}</span>
+          <span v-if="item.category !== 'bebidas'" class="text-xl font-semibold">R$ {{ computedPrice }} - {{
+            computedPrice / selectedQuantity }} Und</span>
+          <span v-else class="text-xl font-semibold">R$ {{ computedPrice }}</span>
           <div v-if="item.category === 'bebidas'">
             <button @click="decreaseQuantity" class="text-gray-500">-</button>
             <span class="mx-2">{{ selectedQuantity }}</span>
@@ -40,7 +42,7 @@
         </button>
       </div>
     </div>
-    </div>  
+  </div>
 </template>
 
 <script setup>
