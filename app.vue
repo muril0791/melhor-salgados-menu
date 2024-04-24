@@ -1,13 +1,5 @@
 <template>
   <NavBar :cartItems="cartItems" />
-  <!-- <v-img :width="300" aspect-ratio="16/9" cover style="
-      display: flex;
-      border: red;
-      background-color: grey;
-      z-index: 99999;
-      width: 200px;
-      height: 200px;
-    " src="../assets/teste.jpg"></v-img> -->
   <section style="display: flex; justify-content: center">
     <CategoryMenu @update:category="updateCategory" />
   </section>

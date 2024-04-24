@@ -1,7 +1,7 @@
 <template>
   <transition name="slide" appear>
-    <div v-if="isVisible"
-      class="fixed bottom-4 left-1/2 transform -translate-x-1/2 px-4 py-2 rounded shadow-lg bg-blue-500 text-white text-center"
+    <div c v-if="isVisible"
+      class="fixed bottom-4 left-1/2 transform -translate-x-1/2 px-4 py-2 rounded shadow-lg bg-blue-500 text-white text-center z-50"
       @click="hide">
       {{ message }}
     </div>
