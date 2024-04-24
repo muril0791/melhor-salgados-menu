@@ -1,19 +1,14 @@
 <template>
   <Disclosure as="nav" class="bg-base-300">
     <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-      <div class="relative flex h-16 items-center justify-between">
+      <div class="relative flex h-16 justify-between">
         <div>
           <Cart :cartItems="cartItems" />
         </div>
-        <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start"></div>
-        <div class="absolute inset-y-0 left-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-          <div>
-            <requests />
-          </div>
-          <!-- Profile dropdown -->
-          <Menu as="div" class="relative ml-3">
+        <!-- <div class="absolute inset-y-0 left-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+          <Menu as="div" class="ml-3 ">
             <div>
-              <MenuButton class="relative flex rounded-full text-sm bg-transparent">
+              <MenuButton class="relative  flex rounded-full text-sm bg-transparent">
                 <UserCircleIcon class="block text-base-content h-8 w-8" />
               </MenuButton>
             </div>
@@ -29,8 +24,10 @@
               </MenuItems>
             </transition>
           </Menu>
-
-        </div>
+        </div> -->
+        <!-- <div class="absolute inset-y-0 left-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+          <requests />
+        </div> -->
       </div>
     </div>
   </Disclosure>

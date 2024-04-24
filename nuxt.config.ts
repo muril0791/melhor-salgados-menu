@@ -13,7 +13,7 @@ export default defineNuxtConfig({
   modules: ["@nuxtjs/tailwindcss", "@nuxtjs/color-mode"],
 
   css: [
-    "@/assets/css/main.scss",
+    "@/public/assets/css/main.scss",
     "vuetify/lib/styles/main.sass",
     "@mdi/font/css/materialdesignicons.min.css",
   ],

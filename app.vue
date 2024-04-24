@@ -1,5 +1,13 @@
 <template>
   <NavBar :cartItems="cartItems" />
+  <!-- <v-img :width="300" aspect-ratio="16/9" cover style="
+      display: flex;
+      border: red;
+      background-color: grey;
+      z-index: 99999;
+      width: 200px;
+      height: 200px;
+    " src="../assets/teste.jpg"></v-img> -->
   <section style="display: flex; justify-content: center">
     <CategoryMenu @update:category="updateCategory" />
   </section>
@@ -25,133 +33,106 @@ const items = reactive({
   salgados: [
     {
       id: 1,
-      imageUrl: "https://picsum.photos/10/6?image=5",
+      imageUrl:
+        "https://cdn0.tudoreceitas.com/pt/posts/1/9/1/coxinha_simples_191_orig.jpg  ",
       name: "Coxinha",
-      description: "Delicious chicken coxinha.",
-      price: "2.50",
-      bulkPrice: "2.00",
-      bulkprice: "2.50",
-      bulkPrice: "2.00",    },
+      description: "Um delicioso salgado de frango.",
+      price: "0.65",
+      bulkPrice: "0.57",
+      category: "salgados",
+    },
     {
       id: 2,
-      imageUrl: "https://picsum.photos/10/6?image=5",
-      name: "Pastel",
-      description: "Crispy cheese pastel.",
-      price: "2.50",
-      bulkPrice: "2.00",
-      bulkPrice: "2.00"
+      imageUrl:
+        "https://www.meucadernodereceitas.com.br/wp-content/uploads/2023/05/receita-de-bolinha-de-queijo.webp",
+      name: "Bolinha do queijo",
+      description: "Um Delicioso bolinho de queijo.",
+      price: "0.65",
+      bulkPrice: "0.57",
+      category: "salgados",
     },
     {
       id: 3,
-      imageUrl: "https://picsum.photos/10/6?image=5",
-      name: "Kibe",
+      imageUrl: "https://img.cybercook.com.br/receitas/576/kibe.jpeg",
+      name: "kibe",
       description: "Spicy beef kibe.",
-      price: "2.50",
-      bulkPrice: "2.00",
+      price: "0.65",
+      bulkPrice: "0.57",
+      category: "salgados",
     },
     {
       id: 4,
-      imageUrl: "https://picsum.photos/10/6?image=5",
-      name: "Empada",
-      description: "Shrimp empada.",
-      price: "2.50",
-      bulkPrice: "2.00",
+      imageUrl:
+        "https://i.pinimg.com/736x/1c/c5/bc/1cc5bc73492bbbea5f2550832d60f2c9.jpg",
+      name: "Risoles de presunto e queijo",
+      description: " Ham and cheese rissole.",
+      price: "0.65",
+      bulkPrice: "0.57",
+      category: "salgados",
     },
     {
       id: 5,
-      imageUrl: "https://picsum.photos/10/6?image=5",
-      name: "Esfiha",
-      description: "Delicious esfiha with beef.",
-      price: "2.50",
-      bulkPrice: "2.00",
+      imageUrl:
+        "https://saborecia.com.br/wp-content/uploads/2020/06/image-41.png",
+      name: "Enroladinho de Salsicha",
+      description: "Sausage roll.",
+      price: "0.65",
+      bulkPrice: "0.57",
+      category: "salgados",
     },
   ],
   doces: [
     {
       id: 6,
-      imageUrl: "https://picsum.photos/10/6?image=5",
-      name: "Brigadeiro",
+      imageUrl:
+        "https://www.sabornamesa.com.br/media/k2/items/cache/ad14e3f1ea53ec7346e0758c14413a30_XL.jpg",
+      name: "Mini Churros",
       description: "Chocolate brigadeiro.",
-      price: "2.50",
-      bulkPrice: "2.00",
-    },
-    {
-      id: 7,
-      imageUrl: "https://picsum.photos/10/6?image=5",
-      name: "Beijinho",
-      description: "Sweet coconut beijinho.",
-      price: "2.50",
-      bulkPrice: "2.00",
-    },
-    {
-      id: 8,
-      imageUrl: "https://picsum.photos/10/6?image=5",
-      name: "Quindim",
-      description: "Egg yolk and coconut quindim.",
-      price: "2.50",
-      bulkPrice: "2.00",
-    },
-    {
-      id: 9,
-      imageUrl: "https://picsum.photos/10/6?image=5",
-      name: "Pudim",
-      description: "Caramelized milk pudding.",
-      price: "2.50",
-      bulkPrice: "2.00",
-    },
-    {
-      id: 10,
-      imageUrl: "https://picsum.photos/10/6?image=5",
-      name: "Bolo de Rolo",
-      description: "Guava roll cake.",
-      price: "2.50",
-      bulkPrice: "2.00",
+      price: "0.65",
+      bulkPrice: "0.57",
+      category: "salgados",
     },
   ],
   bebidas: [
     {
       id: 11,
-      imageUrl: "https://picsum.photos/10/6?image=5",
-      name: "Coffee",
+      imageUrl: "../assets/images/bebidas/coca-cola.jpg",
+      name: "Coca-cola",
       description: "Freshly brewed coffee.",
-      price: "2.50",
-      bulkPrice: "2.00",
+      price: "10.00",
       category: "bebidas",
     },
     {
       id: 12,
-      imageUrl: "https://picsum.photos/10/6?image=5",
-      name: "Coffee",
+      imageUrl: "../assets/images/bebidas/cerveja.jpg",
+      name: "Cerveja",
       description: "Freshly brewed coffee.",
-      price: "2.50",
-      bulkPrice: "2.00",
+      price: "12.00",
       category: "bebidas",
     },
     {
       id: 13,
-      imageUrl: "https://picsum.photos/10/6?image=5",
-      name: "Coffee",
+      imageUrl: "../assets/images/bebidas/fanta.jpg",
+      name: "Fanta",
       description: "Freshly brewed coffee.",
-      price: "2.50",
-      bulkPrice: "2.00",
+      price: "9.00",
       category: "bebidas",
     },
     {
       id: 14,
-      imageUrl: "https://picsum.photos/10/6?image=5",
-      name: "Coffee",
+      imageUrl: "../assets/images/bebidas/guarana.jpg",
+      name: "Guarana",
       description: "Freshly brewed coffee.",
-      price: "2.50",
-      bulkPrice: "2.00",
+      price: "11.50",
+
       category: "bebidas",
     },
     {
       id: 15,
-      imageUrl: "https://picsum.photos/10/6?image=5",
-      name: "Coffee",
+      imageUrl: "../assets/images/bebidas/agua.jpg",
+      name: "Agua",
       description: "Freshly brewed coffee.",
-      price: "2.50",
-      bulkPrice: "2.00",
+      price: "3.50",
       category: "bebidas",
     },
   ],
@@ -160,16 +141,18 @@ const cartItems = reactive([]);
 const category = ref("salgados");
 
 function showSnackbar() {
-  snackbarRef.value.showSnackbar('Mensagem de exemplo');
+  snackbarRef.value.showSnackbar("Mensagem de exemplo");
 }
 const addToCart = ({ item, quantity }) => {
-  const existingItem = cartItems.find(cartItem => cartItem.id === item.id);
+  const existingItem = cartItems.find((cartItem) => cartItem.id === item.id);
   if (existingItem) {
     existingItem.quantity += quantity;
   } else {
     cartItems.push({ ...item, quantity });
   }
-  snackbarRef.value.showSnackbar(`Item adicionado ao carrinho! ${quantity} ${item.name}`);
+  snackbarRef.value.showSnackbar(
+    `Item adicionado ao carrinho! ${quantity} ${item.name}`
+  );
   saveCartItems();
 };
 
@@ -190,7 +173,7 @@ watchEffect(() => {
 });
 
 function loadCartItems() {
-  const savedItems = localStorage.getItem('cartItems');
+  const savedItems = localStorage.getItem("cartItems");
   if (savedItems) {
     const items = JSON.parse(savedItems);
     cartItems.splice(0, cartItems.length, ...items);
@@ -198,7 +181,7 @@ function loadCartItems() {
 }
 
 function saveCartItems() {
-  localStorage.setItem('cartItems', JSON.stringify(cartItems));
+  localStorage.setItem("cartItems", JSON.stringify(cartItems));
 }
 </script>
 
