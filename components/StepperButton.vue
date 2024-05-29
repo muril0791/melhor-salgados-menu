@@ -1,4 +1,3 @@
-<!-- StepperButton.vue -->
 <template>
     <div class="stepper">
         <button @click="decrement" :disabled="value === min" class="stepper-button">
@@ -11,82 +10,73 @@
     </div>
 </template>
 
-<script>
-export default {
-    name: "StepperButton",
-    props: {
-        initialValue: {
-            type: Number,
-            default: 0,
-        },
-        min: {
-            type: Number,
-            default: 0,
-        },
-        max: {
-            type: Number,
-            default: 100,
-        }
+<script setup>
+import { ref, watch } from 'vue';
+const props = defineProps({
+    initialValue: {
+        type: Number,
+        default: 0,
     },
-    data() {
-        return {
-            value: this.initialValue,
-        };
+    min: {
+        type: Number,
+        default: 0,
     },
-    watch: {
-        initialValue(newVal) {
-            this.value = newVal;
-        },
-    },
-    methods: {
-        increment() {
-            if (this.value < this.max) {
-                this.value++;
-                this.$emit('update:value', this.value);
-            }
-        },
-        decrement() {
-            if (this.value > this.min) {
-                this.value--;
-                this.$emit('update:value', this.value);
-            }
-        },
-    },
-};
-</script>
+    max: {
+        type: Number,
+        default: 100,
+    }
+});
+const emit = defineEmits(['update:value']);
+const value = ref(props.initialValue);
 
+watch(props.initialValue, (newVal) => {
+    value.value = newVal;
+});
+
+function increment() {
+    if (value.value < props.max) {
+        value.value++;
+        emit('update:value', value.value);
+    }
+}
+
+function decrement() {
+    if (value.value > props.min) {
+        value.value--;
+        emit('update:value', value.value);
+    }
+}
+</script>
 
 <style>
 .stepper {
-  display: flex;
-  align-items: center;
-  border: 1.5px solid #000000;
-  border-radius: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: rgba(245, 245, 245, 0.774);
-  color: #000000;
-  max-width: 120px;
-  height: 35px;
-  padding-left: 6px;
-  padding-right: 6px;
+    display: flex;
+    align-items: center;
+    border: 1.5px solid #000000;
+    border-radius: 20px;
+    justify-content: center;
+    background: rgba(245, 245, 245, 0.774);
+    color: #000000;
+    max-width: 120px;
+    height: 35px;
+    padding-left: 6px;
+    padding-right: 6px;
 }
 
 .stepper-button {
-  font-size: 18px;
-  color: white;
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-  color: black;
+    font-size: 18px;
+    color: white;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: black;
 }
 
 .stepper-button:disabled {
-  color: rgb(168, 168, 168);
+    color: rgb(168, 168, 168);
 }
 
 .stepper-value {
-  padding: 0 20px;
+    padding: 0 20px;
 }
 </style>

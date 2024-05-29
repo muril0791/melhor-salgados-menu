@@ -1,42 +1,17 @@
 <template>
   <Disclosure as="nav" class="bg-base-300">
     <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-      <div class="relative flex h-16 justify-between">
-        <div class="flex text-sm bg-transparent">
-          <Cart :cartItems=" cartItems" />
-        </div>
-
-      </div>
+      <Cart :cartItems="cartStore.cartItems" />
     </div>
   </Disclosure>
 </template>
 
 <script setup>
-import { ref, watch, onMounted } from "vue";
+import { Disclosure } from '@headlessui/vue';
+import { useCartStore } from '@/store/index';
+import Cart from './Cart.vue';
 
-import {
-  Disclosure,
-  DisclosureButton,
-  DisclosurePanel,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuItems,
-} from "@headlessui/vue";
-import {
-  Bars3Icon,
-  BellIcon,
-  XMarkIcon,
-  ArrowUpRightIcon,
-} from "@heroicons/vue/24/outline";
-
-import { UserCircleIcon } from "@heroicons/vue/24/solid";
-import Cart from "./Cart.vue";
-import requests from "./requests.vue";
-import { defineProps } from "vue";
-const props = defineProps({
-  cartItems: Array,
-});
+const cartStore = useCartStore();
 </script>
 
 <style lang="scss" scoped>
@@ -46,6 +21,7 @@ const props = defineProps({
       background: #94a3b8;
     }
   }
+
   .language {
     .active {
       background: #94a3b8;
@@ -59,6 +35,7 @@ const props = defineProps({
       background: #e5e7eb;
     }
   }
+
   .language {
     .active {
       background: #e5e7eb;

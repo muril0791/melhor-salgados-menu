@@ -1,7 +1,6 @@
 <template>
   <div class="col">
     <div class="bg-white rounded-lg shadow overflow-hidden group">
-      <!-- Imagem e ícone de favorito -->
       <div class="relative">
         <img class="h-48 w-full object-cover" :src="item.imageUrl" />
         <button class="absolute top-0 right-0 p-2 text-gray-400 hover:text-red-600">

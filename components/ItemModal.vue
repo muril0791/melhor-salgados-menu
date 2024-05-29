@@ -19,7 +19,7 @@
 </template>
 
 <script setup>
-import { ref, watch, defineProps, defineEmits } from 'vue';
+import { ref, defineProps, defineEmits, watch } from 'vue';
 import StepperButton from './StepperButton.vue';
 
 const props = defineProps({
@@ -29,19 +29,19 @@ const props = defineProps({
 const visible = ref(true);
 const emit = defineEmits(['update-cart', 'close']);
 
-const updateQuantity = (newQuantity) => {
+function updateQuantity(newQuantity) {
     props.item.quantity = newQuantity;
-};
+}
 
-const close = () => {
+function close() {
     visible.value = false;
     emit('close');
-};
+}
 
-const updateCart = () => {
+function updateCart() {
     emit('update-cart', props.item);
     close();
-};
+}
 
 watch(() => props.item, (newVal) => {
     if (!newVal) visible.value = false;

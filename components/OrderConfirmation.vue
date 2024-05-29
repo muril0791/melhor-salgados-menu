@@ -13,8 +13,8 @@ import { ref } from 'vue';
 
 const customerName = ref('');
 
-const finalizeOrder = () => {
+function finalizeOrder() {
     console.log('Pedido finalizado');
     // Implementar lógica de finalização e navegar para a tela de status do pedido
-};
+}
 </script>

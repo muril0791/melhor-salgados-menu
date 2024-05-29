@@ -1,17 +1,28 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
+import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify';
+
 export default defineNuxtConfig({
   devtools: {
     enabled: true,
-
     timeline: {
       enabled: true,
     },
   },
+  plugins: [
+    '~/plugins/pinia.js'
+  ],
   build: {
     transpile: ["vuetify"],
   },
-  modules: ["@nuxtjs/tailwindcss", "@nuxtjs/color-mode"],
-
+  modules: [
+    "@nuxtjs/tailwindcss",
+    "@nuxtjs/color-mode",
+    (_options, nuxt) => {
+      nuxt.hooks.hook('vite:extendConfig', (config) => {
+        // @ts-expect-error
+        config.plugins.push(vuetify({ autoImport: true }));
+      });
+    },
+  ],
   css: [
     "@/public/assets/css/main.scss",
     "vuetify/lib/styles/main.sass",
@@ -26,7 +37,7 @@ export default defineNuxtConfig({
     viewer: true,
   },
   colorMode: {
-    preference: "coffee", 
+    preference: "coffee",
     dataValue: "theme",
     classSuffix: "",
   },
