@@ -36,7 +36,7 @@
           </button>
         </div>
         <button :disabled="!canAddToCart" @click="emitAddToCart"
-          class="mt-4 w-full bg-green-500 text-white py-2 rounded hover:bg-green-600">
+          class="mt-4 w-full bg-green-600 text-white py-2 rounded hover:bg-green-700">
           Adicionar ao Carrinho
         </button>
       </div>

@@ -1,9 +1,10 @@
 <template>
   <main class="border-b pb-6">
     <section>
-      <NavBar @search="handleSearch" />
+      <NavBar @search="handleSearch" @openCart="openCart" />
     </section>
     <Snackbar ref="snackbarRef" />
+    <Cart :isOpen="isCartOpen" @closeCart="closeCart" />
     <div class="max-w-screen-xl mx-auto my-4 px-4 sm:px-6 lg:px-8">
       <div v-for="(items, category) in filteredItems" :key="category">
         <h2 class="text-2xl font-bold mb-4 capitalize">{{ category }}</h2>
@@ -20,12 +21,15 @@ import { ref, computed, onMounted } from 'vue';
 import { useCartStore } from '@/store/index';
 import NavBar from '@/components/NavBar.vue';
 import Snackbar from '@/components/Snackbar.vue';
+import Cart from '@/components/Cart.vue';
 import Card from '@/components/Card.vue';
 import DBitems from './DBitems.json';
 
 const snackbarRef = ref(null);
 const cartStore = useCartStore();
 const searchQuery = ref('');
+
+const isCartOpen = ref(false);
 
 const items = ref(DBitems);
 
@@ -50,6 +54,14 @@ function addToCart({ item, quantity }) {
 
 function handleSearch(query) {
   searchQuery.value = query;
+}
+
+function openCart() {
+  isCartOpen.value = true;
+}
+
+function closeCart() {
+  isCartOpen.value = false;
 }
 
 onMounted(() => {

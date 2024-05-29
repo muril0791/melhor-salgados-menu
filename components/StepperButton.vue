@@ -1,21 +1,20 @@
 <template>
-    <div class="stepper">
-        <button @click="decrement" :disabled="value === min" class="stepper-button">
+    <div class="stepper flex items-center">
+        <button @click="decrement" :disabled="value === min" class="stepper-button p-2">
             <v-icon>mdi-minus</v-icon>
         </button>
-        <span class="stepper-value">{{ value }}</span>
-        <button @click="increment" :disabled="value === max" class="stepper-button">
+        <span class="stepper-value mx-2">{{ value }}</span>
+        <button @click="increment" :disabled="value === max" class="stepper-button p-2">
             <v-icon>mdi-plus</v-icon>
         </button>
     </div>
 </template>
 
 <script setup>
-import { ref, watch } from 'vue';
 const props = defineProps({
-    initialValue: {
+    modelValue: {
         type: Number,
-        default: 0,
+        required: true,
     },
     min: {
         type: Number,
@@ -24,52 +23,45 @@ const props = defineProps({
     max: {
         type: Number,
         default: 100,
-    }
+    },
 });
-const emit = defineEmits(['update:value']);
-const value = ref(props.initialValue);
 
-watch(props.initialValue, (newVal) => {
-    value.value = newVal;
+const emit = defineEmits(['update:modelValue']);
+
+const value = computed({
+    get: () => props.modelValue,
+    set: (val) => emit('update:modelValue', val),
 });
 
 function increment() {
     if (value.value < props.max) {
         value.value++;
-        emit('update:value', value.value);
     }
 }
 
 function decrement() {
     if (value.value > props.min) {
         value.value--;
-        emit('update:value', value.value);
     }
 }
 </script>
 
-<style>
+<style scoped>
 .stepper {
-    display: flex;
-    align-items: center;
-    border: 1.5px solid #000000;
+    border: 1px solid #000;
     border-radius: 20px;
-    justify-content: center;
     background: rgba(245, 245, 245, 0.774);
-    color: #000000;
+    color: #000;
     max-width: 120px;
     height: 35px;
-    padding-left: 6px;
-    padding-right: 6px;
 }
 
 .stepper-button {
     font-size: 18px;
-    color: white;
+    color: black;
     background-color: transparent;
     border: none;
     cursor: pointer;
-    color: black;
 }
 
 .stepper-button:disabled {
