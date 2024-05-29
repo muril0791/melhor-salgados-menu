@@ -1,45 +1,34 @@
 <template>
-  <Disclosure as="nav" class="bg-base-300">
-    <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-      <Cart :cartItems="cartStore.cartItems" />
+  <nav class="bg-base-300 p-4 flex justify-between items-center">
+    <div class="flex items-center lg:w-1/2 lg:justify-center">
+      <SearchBar @search="handleSearch" />
     </div>
-  </Disclosure>
+    <CartButton :cartItems="cartStore.cartItems" @toggleCart="toggleCart" />
+  </nav>
+  <Cart :isOpen="isCartOpen" @closeCart="toggleCart" />
 </template>
 
 <script setup>
-import { Disclosure } from '@headlessui/vue';
+import { ref } from 'vue';
 import { useCartStore } from '@/store/index';
-import Cart from './Cart.vue';
+import SearchBar from '@/components/SearchBar.vue';
+import CartButton from '@/components/CartButton.vue';
+import Cart from '@/components/Cart.vue';
 
 const cartStore = useCartStore();
+const isCartOpen = ref(false);
+
+const emit = defineEmits(['search']);
+
+function handleSearch(query) {
+  emit('search', query);
+}
+
+function toggleCart() {
+  isCartOpen.value = !isCartOpen.value;
+}
 </script>
 
-<style lang="scss" scoped>
-.dark {
-  .theme {
-    .active {
-      background: #94a3b8;
-    }
-  }
-
-  .language {
-    .active {
-      background: #94a3b8;
-    }
-  }
-}
-
-.light {
-  .theme {
-    .active {
-      background: #e5e7eb;
-    }
-  }
-
-  .language {
-    .active {
-      background: #e5e7eb;
-    }
-  }
-}
+<style scoped>
+/* Estilos para NavBar */
 </style>
