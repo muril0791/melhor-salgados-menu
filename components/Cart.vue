@@ -3,27 +3,32 @@
     <button @click="toggleCart" class="p-2 rounded hover:bg-gray-600 fixed top-4 left-4 z-50">
       <v-icon>mdi-basket-outline</v-icon>
     </button>
-    <div class="fixed top-0 left-0 z-40" :class="{ 'w-full h-full': isMobile, 'w-1/2': !isMobile, hidden: !isOpen }">
-      <div class="bg-white h-full shadow-xl overflow-auto p-4">
-        <h2 class="text-lg font-bold mb-4">Carrinho de Compras</h2>
-        <div v-for="item in cartStore.cartItems" :key="item.id" class="flex justify-between items-center mb-2">
-          <div>
-            <p class="font-medium">{{ item.name }}</p>
-            <p class="text-sm text-gray-600">${{ item.price }} x {{ item.quantity }}</p>
-          </div>
-          <div class="flex items-center space-x-2">
-            <button @click.stop="decreaseQuantity(item.id)" class="text-gray-500">-</button>
-            <span>{{ item.quantity }}</span>
-            <button @click.stop="increaseQuantity(item.id)" class="text-gray-500">+</button>
-            <button @click.stop="removeItem(item.id)" class="text-red-500 text-sm">Remover</button>
-          </div>
+
+    <!-- Overlay para fechar o carrinho ao clicar fora -->
+    <div v-if="isOpen" @click="toggleCart" class="fixed inset-0 bg-black opacity-50 z-40"></div>
+
+    <!-- Carrinho de Compras -->
+    <div
+      class="fixed top-0 right-0 z-50 bg-white shadow-xl overflow-auto p-4 transform transition-transform duration-300"
+      :class="{ 'translate-x-0': isOpen, 'translate-x-full': !isOpen, 'w-full h-full': isMobile, 'w-1/2': !isMobile }">
+      <h2 class="text-lg font-bold mb-4">Carrinho de Compras</h2>
+      <div v-for="item in cartStore.cartItems" :key="item.id" class="flex justify-between items-center mb-2">
+        <div>
+          <p class="font-medium">{{ item.name }}</p>
+          <p class="text-sm text-gray-600">${{ item.price }} x {{ item.quantity }}</p>
         </div>
-        <div class="mt-4">
-          <p class="font-bold text-lg">Total: ${{ total }}</p>
-          <button @click="goToStep2" class="mt-2 w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600">
-            Próximo Passo
-          </button>
+        <div class="flex items-center space-x-2">
+          <button @click.stop="decreaseQuantity(item.id)" class="text-gray-500">-</button>
+          <span>{{ item.quantity }}</span>
+          <button @click.stop="increaseQuantity(item.id)" class="text-gray-500">+</button>
+          <button @click.stop="removeItem(item.id)" class="text-red-500 text-sm">Remover</button>
         </div>
+      </div>
+      <div class="mt-4">
+        <p class="font-bold text-lg">Total: ${{ total }}</p>
+        <button @click="goToStep2" class="mt-2 w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600">
+          Próximo Passo
+        </button>
       </div>
     </div>
   </div>

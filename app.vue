@@ -3,7 +3,7 @@
     <section>
       <NavBar :cartItems="cartStore.cartItems" />
     </section>
-    <section class="flex justify-center">
+    <section class="flex justify-center my-4">
       <SearchBar @search="handleSearch" />
     </section>
   </main>
@@ -11,8 +11,11 @@
     <Snackbar ref="snackbarRef" />
   </div>
   <div class="max-w-screen-xl mx-auto my-4 px-4 sm:px-6 lg:px-8">
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-      <Card v-for="item in filteredItems" :key="item.id" :item="item" @add-to-cart="addToCart" />
+    <div v-for="(items, category) in filteredItems" :key="category">
+      <h2 class="text-2xl font-bold mb-4 capitalize">{{ category }}</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-8">
+        <Card v-for="item in items" :key="item.id" :item="item" @add-to-cart="addToCart" />
+      </div>
     </div>
   </div>
 </template>
@@ -33,9 +36,13 @@ const searchQuery = ref('');
 const items = ref(DBitems);
 
 const filteredItems = computed(() => {
-  return items.value[cartStore.category].filter(item =>
-    item.name.toLowerCase().includes(searchQuery.value.toLowerCase())
-  );
+  const result = {};
+  for (const category in items.value) {
+    result[category] = items.value[category].filter(item =>
+      item.name.toLowerCase().includes(searchQuery.value.toLowerCase())
+    );
+  }
+  return result;
 });
 
 function showSnackbar() {
