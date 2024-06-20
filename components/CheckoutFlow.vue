@@ -6,7 +6,7 @@
             <input v-model="personalInfo.phone" placeholder="Phone" class="w-full p-2 mb-4 border rounded" />
             <input v-model="personalInfo.cpf" placeholder="CPF" class="w-full p-2 mb-4 border rounded" />
             <button class="w-full bg-green-600 text-white py-3 rounded mt-6 hover:bg-green-700 transition"
-                @click="nextStep">Next</button>
+                @click="nextStep" :disabled="!isPersonalInfoValid">Next</button>
         </div>
 
         <div v-if="step === 'deliveryInfo'">
@@ -24,7 +24,7 @@
                 <input v-model="deliveryInfo.city" placeholder="City" class="w-full p-2 mb-4 border rounded" />
             </div>
             <button class="w-full bg-green-600 text-white py-3 rounded mt-6 hover:bg-green-700 transition"
-                @click="nextStep">Next</button>
+                @click="nextStep" :disabled="!isDeliveryInfoValid">Next</button>
         </div>
 
         <div v-if="step === 'paymentInfo'">
@@ -43,7 +43,7 @@
                 <p class="text-sm text-gray-500">* Ensure you have the exact amount or the change</p>
             </div>
             <button class="w-full bg-green-600 text-white py-3 rounded mt-6 hover:bg-green-700 transition"
-                @click="confirmPayment">Confirm</button>
+                @click="confirmPayment" :disabled="!isPaymentInfoValid">Confirm</button>
         </div>
 
         <!-- Snackbar -->
@@ -52,7 +52,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import Snackbar from '@/components/Snackbar.vue';
 
 const step = ref('personalInfo');
@@ -80,31 +80,56 @@ const snackbarRef = ref(null);
 
 const emit = defineEmits(['finalizeOrder']);
 
+const isPersonalInfoValid = computed(() => {
+    return personalInfo.value.name && personalInfo.value.phone && personalInfo.value.cpf;
+});
+
+const isDeliveryInfoValid = computed(() => {
+    if (deliveryMethod.value === 'pickup') return true;
+    return deliveryInfo.value.address && deliveryInfo.value.zipCode && deliveryInfo.value.city;
+});
+
+const isPaymentInfoValid = computed(() => {
+    if (paymentMethod.value === 'cash') return cashInfo.value.amount;
+    return paymentMethod.value;
+});
+
 function nextStep() {
     if (step.value === 'personalInfo') {
-        step.value = 'deliveryInfo';
+        if (isPersonalInfoValid.value) step.value = 'deliveryInfo';
     } else if (step.value === 'deliveryInfo') {
-        step.value = 'paymentInfo';
+        if (isDeliveryInfoValid.value) step.value = 'paymentInfo';
     }
 }
 
 function confirmPayment() {
-    snackbarRef.value.showSnackbar({
-        message: 'Payment will be made on delivery',
-        actionText: 'OK',
-    });
-    emit('finalizeOrder', {
-        personalInfo: personalInfo.value,
-        deliveryMethod: deliveryMethod.value,
-        deliveryInfo: deliveryInfo.value,
-        paymentMethod: paymentMethod.value,
-        cashInfo: cashInfo.value,
-    });
+    if (isPaymentInfoValid.value) {
+        snackbarRef.value.showSnackbar({
+            message: 'Payment will be made on delivery',
+            actionText: 'OK',
+        });
+        emit('finalizeOrder', {
+            personalInfo: personalInfo.value,
+            deliveryMethod: deliveryMethod.value,
+            deliveryInfo: deliveryInfo.value,
+            paymentMethod: paymentMethod.value,
+            cashInfo: cashInfo.value,
+        });
+    } else {
+        snackbarRef.value.showSnackbar({
+            message: 'Please fill in all the required fields.',
+            actionText: 'OK',
+        });
+    }
 }
 </script>
 
 <style scoped>
 button {
     cursor: pointer;
+}
+button:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
 }
 </style>

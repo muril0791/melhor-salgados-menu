@@ -8,10 +8,15 @@ export default defineNuxtConfig({
     },
   },
   plugins: [
-    '~/plugins/pinia.js'
+    '~/plugins/pinia.js',
+    '~/plugins/directives.js'
   ],
   build: {
     transpile: ["vuetify"],
+  },
+  devServer: {
+    host: '0.0.0.0',
+    port: 3000,
   },
   modules: [
     "@nuxtjs/tailwindcss",

@@ -3,22 +3,24 @@ import { defineStore } from "pinia";
 export const useCartStore = defineStore("cart", {
   state: () => ({
     cartItems: [],
-    category: "salgados",
   }),
   actions: {
-    addToCart(item, quantity) {
+    addToCart(item, quantity, totalPrice, detail) {
       const existingItem = this.cartItems.find(
-        (cartItem) => cartItem.id === item.id
+        (cartItem) => cartItem.id === item.id && cartItem.detail === detail
       );
       if (existingItem) {
         existingItem.quantity += quantity;
+        existingItem.totalPrice = (
+          parseFloat(existingItem.totalPrice) + parseFloat(totalPrice)
+        ).toFixed(2);
       } else {
-        this.cartItems.push({ ...item, quantity });
+        this.cartItems.push({ ...item, quantity, totalPrice, detail });
       }
       this.saveCartItems();
     },
-    updateCategory(newCategory) {
-      this.category = newCategory;
+    saveCartItems() {
+      localStorage.setItem("cartItems", JSON.stringify(this.cartItems));
     },
     loadCartItems() {
       const savedItems = localStorage.getItem("cartItems");
@@ -26,11 +28,10 @@ export const useCartStore = defineStore("cart", {
         this.cartItems = JSON.parse(savedItems);
       }
     },
-    saveCartItems() {
-      localStorage.setItem("cartItems", JSON.stringify(this.cartItems));
-    },
-    removeItem(id) {
-      this.cartItems = this.cartItems.filter((item) => item.id !== id);
+    removeItem(id, detail) {
+      this.cartItems = this.cartItems.filter(
+        (item) => !(item.id === id && item.detail === detail)
+      );
       this.saveCartItems();
     },
     clearCart() {
